@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "serve:reset": "yarn clean && yarn install && yarn serve",
     "build": "vue-cli-service build",
+    "clean": "rm -rf dist node_modules",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"
   },

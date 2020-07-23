@@ -1,18 +1,29 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <PerformanceMeasurer :algorithms="algorithms"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
+import PerformanceMeasurer from '@/components/PerformanceMeasurer.vue';
+
+import defaultSort from '@/sorting/defaultSort';
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld,
+    PerformanceMeasurer,
+  },
+  data() {
+    return {
+      algorithms: [
+        {
+          name: 'JavaScriptDefault',
+          sort: defaultSort,
+        },
+      ],
+    };
   },
 };
 </script>
