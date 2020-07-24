@@ -5,4 +5,6 @@ const sortPerformance = (list, sort) => {
   return afterSort - beforeSort;
 };
 
-export default sortPerformance;
+const inOrder = (list) => list.every((value, index, array) => !index || array[index - 1] < value);
+
+export { sortPerformance, inOrder };

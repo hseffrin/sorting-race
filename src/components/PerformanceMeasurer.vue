@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import sortPerformance from '@/sorting/sortPerformance';
+import { sortPerformance } from '@/sorting/sortPerformance';
 
 export default {
   name: 'PerformanceMeasurer',
@@ -50,6 +50,7 @@ export default {
       this.baseArray.push(this.random());
       this.runnersList.forEach((algorithm) => {
         const data = this.results[algorithm.name] || this.result(algorithm);
+        debugger;
         data.time = sortPerformance(this.baseArray, algorithm.sort);
         const fail = this.testPassed(data) ? 0 : 1;
         data.fails += fail;
