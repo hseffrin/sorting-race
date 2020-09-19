@@ -1,9 +1,7 @@
 <template>
   <div class="measurement">
     <div v-for="result in runResults" :key='result.name'>
-      Algoritmo {{ result.name }} com array de {{ result.size }} valores.
-      Tempo: {{ result.time }}
-      Falhas: {{result.fails}}
+      <slot :result="lapResult(result)"/>
     </div>
   </div>
 </template>
@@ -50,7 +48,6 @@ export default {
       this.baseArray.push(this.random());
       this.runnersList.forEach((algorithm) => {
         const data = this.results[algorithm.name] || this.result(algorithm);
-        debugger;
         data.time = sortPerformance(this.baseArray, algorithm.sort);
         const fail = this.testPassed(data) ? 0 : 1;
         data.fails += fail;
@@ -83,6 +80,16 @@ export default {
         name: algorithm.name,
         time: 0,
         size: 0,
+      };
+    },
+    lapResult({
+      name, size, fails, time,
+    }) {
+      return {
+        name,
+        size,
+        fails,
+        time,
       };
     },
   },

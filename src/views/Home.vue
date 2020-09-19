@@ -1,6 +1,12 @@
 <template>
   <div class="home">
-    <PerformanceMeasurer :algorithms="algorithms"/>
+    <PerformanceMeasurer :algorithms="algorithms">
+      <template #default="{result: { name, size, time, fails }}">
+        Algoritmo {{ name }} com array de {{ size }} valores.
+        Tempo: {{ time }}
+        Falhas: {{fails}}
+      </template>
+    </PerformanceMeasurer>
   </div>
 </template>
 
