@@ -11,7 +11,6 @@ test('test the inOrder function', () => {
   expect(inOrder(reversedArray)).toBeFalsy();
 });
 
-
 describe('default javascript sort', () => {
   test('with unordered array', () => {
     const sorted = defaultSort(shuffledArray);

@@ -8,6 +8,7 @@
     "build": "vue-cli-service build",
     "clean": "rm -rf dist node_modules",
     "test:unit": "vue-cli-service test:unit",
+    "test:debug": "node --inspect node_modules/.bin/jest --watch --runInBand",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
@@ -30,6 +31,7 @@
     "lint-staged": "^9.5.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
+    "vue-jest": "^3.0.7",
     "vue-template-compiler": "^2.6.11"
   },
   "gitHooks": {
