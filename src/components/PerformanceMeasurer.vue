@@ -13,18 +13,34 @@ export default {
   name: 'PerformanceMeasurer',
   data() {
     return {
-      baseArray: [],
+      baseArray: this.inputArray,
       results: {},
       runnersList: this.algorithms,
       rounds: 0,
-      failsUtilStop: 5,
-      maxTime: 1,
+      failsUtilStop: this.maxFails,
+      timeUntilStop: this.maxTime,
     };
   },
   props: {
     algorithms: {
       type: Array,
       default: () => [],
+    },
+    inputArray: {
+      type: Array,
+      default: () => [],
+    },
+    maxFails: {
+      type: Number,
+      default: 5,
+    },
+    maxTime: {
+      type: Number,
+      default: 1,
+    },
+    runOnce: {
+      type: Boolean,
+      default: false,
     },
   },
   mounted() {
@@ -60,7 +76,9 @@ export default {
         return this.canContinueTest(testResult);
       });
 
-      setTimeout(() => this.newLap(), 50);
+      if (!this.runOnce) {
+        setTimeout(() => this.newLap(), 50);
+      }
     },
     random() {
       const min = Number.MIN_SAFE_INTEGER;
@@ -71,7 +89,7 @@ export default {
       return currentAlgorithim.fails <= this.failsUtilStop;
     },
     testPassed(result) {
-      return result.time <= this.maxTime;
+      return result.time <= this.timeUntilStop;
     },
     result(algorithm) {
       return {
