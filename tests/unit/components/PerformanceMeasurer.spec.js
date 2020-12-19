@@ -1,4 +1,4 @@
-import { shallowMount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import PerformanceMeasurer from '@/components/PerformanceMeasurer.vue';
 import defaultSort from '@/sorting/defaultSort';
 
@@ -7,25 +7,29 @@ const sortingAlgoritms = [{
   sort: defaultSort,
 }];
 
+const testArray = Array.from({ length: 10 }, () => Math.floor(Math.random() * 10));
+
 let wrapper;
 
-describe('PerformanceMeasurer rules', () => {
+describe('PerformanceMeasurer fail rules', () => {
   beforeAll(() => {
-    wrapper = shallowMount(PerformanceMeasurer, {
+    wrapper = mount(PerformanceMeasurer, {
       propsData: {
         algorithms: sortingAlgoritms,
+        inputArray: testArray,
+        timeLimit: 0,
       },
       scopedSlots: {
         default: (props) => {
           const testResult = props.result;
-          return `<div>${testResult.size}</div>`;
+          return `${testResult.fails}`;
         },
       },
     });
   });
 
-  test('it must stop after 1 second', () => {
-    const text = wrapper.find('div').text();
-    expect(text).toBe('1');
+  test('it must fails with limit of 0 milisecond', () => {
+    const fails = wrapper.find('div').text();
+    expect(fails).toBe('1');
   });
 });
