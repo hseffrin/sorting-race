@@ -27,7 +27,7 @@ export default {
     },
   },
   mounted() {
-    if (this.hasRunnersInRace()) {
+    if (this.hasRunnersInRace) {
       this.startRace();
     }
   },
@@ -39,24 +39,32 @@ export default {
   },
   computed: {
     hasRunnersInRace() {
+      debugger;
       return this.runnersList.length > 0;
     },
+  },
+  provide() {
+    return {
+      nextTurn: this.nextTurn,
+      updateRunnerList: this.updateRunnerList,
+    };
   },
   methods: {
     startRace() {
       if (this.hasRunnersInRace) {
+        this.runnersList = this.runnersList.map((algorithm) => ({
+          ...algorithm,
+          fails: 0,
+          time: 0,
+        }));
+        debugger;
         this.nextTurn();
       }
     },
     nextTurn() {
       this.baseArray.push(this.random());
-
-      this.runnersList = this.runnersList.filter((algorithm) => {
-        const testResult = this.results[algorithm.name];
-        return this.canContinueTest(testResult);
-      });
-
-      setTimeout(() => this.newLap(), 50);
+      debugger;
+      this.runnersList = this.runnersList.filter((algorithm) => this.canContinueTest(algorithm));
     },
     random() {
       const min = Number.MIN_SAFE_INTEGER;
@@ -64,19 +72,11 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     canContinueTest(currentAlgorithim) {
+      debugger;
       return currentAlgorithim.fails <= this.failsUtilStop;
     },
-    testPassed(result) {
-      return result.time <= this.timeUntilStop;
-    },
-    result(algorithm) {
-      return {
-        algorithm: algorithm.sort,
-        fails: 0,
-        name: algorithm.name,
-        time: 0,
-        size: 0,
-      };
+    updateRunnerList(list) {
+      this.runnersList = list;
     },
     lapResult({
       name, size, fails, time,
@@ -88,6 +88,13 @@ export default {
         time,
       };
     },
+  },
+  render() {
+    return this.$scopedSlots.default({
+      algorithms: this.runnersList,
+      testArray: this.baseArray,
+      maxTime: this.maxTime,
+    });
   },
 };
 </script>

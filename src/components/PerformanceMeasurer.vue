@@ -31,9 +31,6 @@ export default {
       default: 100,
     },
   },
-  mounted() {
-    if (this.hasRunnersInRace) { this.newLap(); }
-  },
   watch: {
     inputArray(newValue) {
       if (newValue) {
@@ -49,8 +46,10 @@ export default {
       return this.runnersList.length > 0;
     },
   },
+  inject: ['updateRunnerList', 'nextTurn'],
   methods: {
     newLap() {
+      debugger;
       this.runnersList.forEach((algorithm) => {
         const data = this.results[algorithm.name] || this.result(algorithm);
         data.time = sortPerformance(this.inputArray, algorithm.sort);
@@ -59,6 +58,8 @@ export default {
         data.size = this.inputArray.length;
         this.$set(this.results, algorithm.name, data);
       });
+      this.updateRunnerList(this.runResults);
+      this.nextTurn();
     },
     testPassed(result) {
       return result.time <= this.timeLimit;

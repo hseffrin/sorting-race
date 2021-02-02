@@ -1,17 +1,26 @@
 <template>
   <div class="home">
-    <PerformanceMeasurer :algorithms="algorithms">
-      <template #default="{result: { name, size, time, fails }}">
-        Algoritmo {{ name }} com array de {{ size }} valores.
-        Tempo: {{ time }}
-        Falhas: {{fails}}
+    <AlgorithmTesters :algorithms="algorithms">
+      <template #default="{algorithms, maxTime, testArray}">
+        <PerformanceMeasurer
+          :algorithms="algorithms"
+          :time-limit="maxTime"
+          :input-array="testArray"
+        >
+          <template #default="{result: { name, size, time, fails }}">
+            Algoritmo {{ name }} com array de {{ size }} valores.
+            Tempo: {{ time }}
+            Falhas: {{fails}}
+          </template>
+        </PerformanceMeasurer>
       </template>
-    </PerformanceMeasurer>
+    </AlgorithmTesters>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+import AlgorithmTesters from '@/components/AlgorithmTesters.vue';
 import PerformanceMeasurer from '@/components/PerformanceMeasurer.vue';
 
 import defaultSort from '@/sorting/defaultSort';
@@ -19,6 +28,7 @@ import defaultSort from '@/sorting/defaultSort';
 export default {
   name: 'Home',
   components: {
+    AlgorithmTesters,
     PerformanceMeasurer,
   },
   data() {
