@@ -49,6 +49,11 @@ export default {
     },
   },
   inject: ['updateRunnerList'],
+  mounted() {
+    this.$nextTick(() => {
+      this.newLap();
+    });
+  },
   updated() {
     this.$nextTick(() => {
       this.updateRunnerList(this.runResults);
