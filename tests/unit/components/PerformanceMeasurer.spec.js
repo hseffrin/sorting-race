@@ -14,6 +14,9 @@ let wrapper;
 describe('PerformanceMeasurer fail rules', () => {
   beforeAll(() => {
     wrapper = mount(PerformanceMeasurer, {
+      provide: {
+        updateRunnerList: () => {},
+      },
       propsData: {
         algorithms: sortingAlgoritms,
         inputArray: testArray,
