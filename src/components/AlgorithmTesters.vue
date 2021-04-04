@@ -36,16 +36,19 @@ export default {
       this.runnersList = newValue;
       this.startRace();
     },
+    runnersList() {
+      setImmediate(() => {
+        this.nextTurn();
+      });
+    },
   },
   computed: {
     hasRunnersInRace() {
-      debugger;
       return this.runnersList.length > 0;
     },
   },
   provide() {
     return {
-      nextTurn: this.nextTurn,
       updateRunnerList: this.updateRunnerList,
     };
   },
@@ -57,13 +60,10 @@ export default {
           fails: 0,
           time: 0,
         }));
-        debugger;
-        this.nextTurn();
       }
     },
     nextTurn() {
       this.baseArray.push(this.random());
-      debugger;
       this.runnersList = this.runnersList.filter((algorithm) => this.canContinueTest(algorithm));
     },
     random() {
@@ -72,21 +72,10 @@ export default {
       return Math.floor(Math.random() * (max - min)) + min;
     },
     canContinueTest(currentAlgorithim) {
-      debugger;
       return currentAlgorithim.fails <= this.failsUtilStop;
     },
     updateRunnerList(list) {
       this.runnersList = list;
-    },
-    lapResult({
-      name, size, fails, time,
-    }) {
-      return {
-        name,
-        size,
-        fails,
-        time,
-      };
     },
   },
   render() {
