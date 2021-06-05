@@ -24,6 +24,7 @@ import AlgorithmTesters from '@/components/AlgorithmTesters.vue';
 import PerformanceMeasurer from '@/components/PerformanceMeasurer.vue';
 
 import defaultSort from '@/sorting/defaultSort';
+import bubbleSort from '@/sorting/bubbleSort';
 
 export default {
   name: 'Home',
@@ -37,6 +38,10 @@ export default {
         {
           name: 'JavaScriptDefault',
           sort: defaultSort,
+        },
+        {
+          name: 'BubbleSort',
+          sort: bubbleSort,
         },
       ],
     };
